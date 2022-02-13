@@ -12,16 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # auto_size_text: 3.0.0
-  # cached_network_image: 3.1.0+1
-  # font_awesome_flutter: 8.11.0
-  # google_fonts: 2.1.0
-  # intl: 0.17.0
-  # json_path: 0.2.1
-  # page_transition: 2.0.4
-  # timeago: 3.1.0
-  # url_launcher: 6.0.15
-  
+
   cupertino_icons: ^1.0.2
 
   # Firebase
@@ -43,18 +34,14 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # assets:
-  #   - assets/images/
-  #   - assets/videos/
-  #   - assets/audios/
-  #   - assets/lottie_animations/
-  #   - asset/rive_animations/
-  #   - assets/pdfs/
+  assets: 
+    - assets/images/logo_wavel.png
+
 
   fonts:
     - family: Montserrat
       fonts:
-        - asset: fonts/Montserrat/static/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat/static/Montserrat-Regular.ttf
         # - asset: fonts/Montserrat/Montserrat-VariableFont_wght.ttf
   #       - asset: fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf
 

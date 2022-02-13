@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wavel/pages/User/parameters.dart';
 import 'package:wavel/pages/homepage.dart';
 import 'package:wavel/pages/login.dart';
 // import 'package:firebase_database/firebase_database.dart';
@@ -57,9 +58,12 @@ class LandingPage extends StatelessWidget {
                   Object? user = snapshot.data;
 
                   if (user == null) {
-                    return Login();
-                  } else {
+                    // print(user);
                     return Homepage();
+                  } else {
+                    // print(user);
+                    // return Homepage();
+                    return Parameters();
                   }
                 }
 

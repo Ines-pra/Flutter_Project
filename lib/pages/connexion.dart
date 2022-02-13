@@ -1,26 +1,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wavel/pages/User/parameters.dart';
+import 'package:wavel/pages/homepage.dart';
+import 'package:wavel/pages/login.dart';
 
-import 'connexion.dart';
-import 'homepage.dart';
-
-class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+class Connexion extends StatefulWidget {
+  Connexion({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Connexion> createState() => _ConnexionState();
 }
 
 late String _email;
 late String _password;
 
-class _LoginState extends State<Login> {
+class _ConnexionState extends State<Connexion> {
   Future<void> _createUser() async {
     try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: _email, password: _password);
+      print("Création d'un utilisateur ok");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Connexion()));
-      print('Redirection vers la page de connexion !');
+          .push(MaterialPageRoute(builder: (context) => Parameters()));
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => Homepage()));
+      // print("User: $userCredential");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -30,17 +34,9 @@ class _LoginState extends State<Login> {
 
   Future<void> _login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password);
-
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Parameters()));
-
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => Homepage()));
-      print("Connexion d'un utilisateur ok");
-
-      // print("User: $userCredential");
+          .push(MaterialPageRoute(builder: (context) => Login()));
+      print("Redirection vers la page de login !");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -199,9 +195,9 @@ class _LoginState extends State<Login> {
                                               minWidth: 170,
                                               height: 40,
                                               color: Color(0xCC3474E0),
-                                              onPressed: _login,
+                                              onPressed: _createUser,
                                               child: const Text(
-                                                "Connexion",
+                                                "Créer",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w500,
@@ -219,9 +215,9 @@ class _LoginState extends State<Login> {
                           minWidth: 170,
                           height: 40,
                           color: Color(0xFFEEEEEE),
-                          onPressed: _createUser,
+                          onPressed: _login,
                           child: const Text(
-                            "Créer son compte",
+                            "Se connecter",
                             style: TextStyle(
                               color: Color(0xCC3474E0),
                               fontWeight: FontWeight.w500,
