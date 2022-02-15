@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'connexion.dart';
 import 'login.dart';
 
 class Homepage extends StatefulWidget {
@@ -11,6 +12,30 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  Future<void> _login() async {
+    try {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Login()));
+      print("Redirection vers la page de login !");
+    } on FirebaseAuthException catch (e) {
+      print("Erreur: $e");
+    } catch (e) {
+      print("Erreur: $e");
+    }
+  }
+
+  Future<void> _createUser() async {
+    try {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Connexion()));
+      print('Redirection vers la page de connexion !');
+    } on FirebaseAuthException catch (e) {
+      print("Erreur: $e");
+    } catch (e) {
+      print("Erreur: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,19 +43,74 @@ class _HomepageState extends State<Homepage> {
       // appBar: AppBar(
       //   title: const Text("Home"),
       // ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-          child: Image.asset('assets/images/logo_wavel.png'),
-          // Text(
-          //   "Homepage",
-          //   style: TextStyle(
-          //     color: Color(0xCC3474E0),
-          //     fontWeight: FontWeight.w500,
-          //   ),
-          // ),
-        ),
-      ),
+      body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              child: Image.asset(
+                'assets/images/logo_wavel.png',
+                height: 225,
+                width: 225,
+              ),
+
+              // Text(
+              //   "Homepage",
+              //   style: TextStyle(
+              //     color: Color(0xCC3474E0),
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
+            ),
+            Padding(
+              // padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+              padding: const EdgeInsets.all(20),
+              child: Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: MaterialButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                side: BorderSide(color: Colors.transparent)),
+                            minWidth: 170,
+                            height: 40,
+                            color: Color(0xFFEEEEEE),
+                            onPressed: _login,
+                            child: const Text(
+                              "Se connecter",
+                              style: TextStyle(
+                                color: Color(0xCC3474E0),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              side: BorderSide(color: Colors.transparent)),
+                          minWidth: 170,
+                          height: 40,
+                          color: Color(0xFFEEEEEE),
+                          onPressed: _createUser,
+                          child: const Text(
+                            "S'enregistrer",
+                            style: TextStyle(
+                              color: Color(0xCC3474E0),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+            )
+          ]),
     );
   }
 }
