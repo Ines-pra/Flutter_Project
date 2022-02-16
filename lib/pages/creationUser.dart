@@ -4,17 +4,17 @@ import 'package:wavel/pages/User/parameters.dart';
 import 'package:wavel/pages/homepage.dart';
 import 'package:wavel/pages/login.dart';
 
-class Connexion extends StatefulWidget {
-  Connexion({Key? key}) : super(key: key);
+class CreationUser extends StatefulWidget {
+  CreationUser({Key? key}) : super(key: key);
 
   @override
-  State<Connexion> createState() => _ConnexionState();
+  State<CreationUser> createState() => _CreationUserState();
 }
 
 late String _email;
 late String _password;
 
-class _ConnexionState extends State<Connexion> {
+class _CreationUserState extends State<CreationUser> {
   Future<void> _createUser() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance

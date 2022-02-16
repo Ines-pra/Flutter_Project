@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'connexion.dart';
+import 'creationUser.dart';
 import 'login.dart';
 
 class Homepage extends StatefulWidget {
@@ -27,7 +27,7 @@ class _HomepageState extends State<Homepage> {
   Future<void> _createUser() async {
     try {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Connexion()));
+          .push(MaterialPageRoute(builder: (context) => CreationUser()));
       print('Redirection vers la page de connexion !');
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
@@ -109,7 +109,7 @@ class _HomepageState extends State<Homepage> {
                       )
                     ],
                   )),
-            )
+            ),
           ]),
     );
   }
