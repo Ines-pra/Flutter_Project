@@ -1,9 +1,10 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-
+import 'package:wavel/pages/User/informationsUser.dart';
+import 'package:wavel/pages/Travel/listTravel.dart';
+import 'package:wavel/pages/User/listUser.dart';
+import 'package:wavel/pages/accueil.dart';
 import '../login.dart';
 
 class Parameters extends StatefulWidget {
@@ -22,7 +23,6 @@ class _ParametersState extends State<Parameters> {
       print("Deconnexion");
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => Login()));
-      print("Redirection vers la page de login !");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -32,13 +32,8 @@ class _ParametersState extends State<Parameters> {
 
   Future<void> _envoiDonnees() async {
     try {
-      FirebaseFirestore.instance
-          .collection('data')
-          .add({'text': 'data added through app'});
-
+      FirebaseFirestore.instance.collection('data').add({'text': _donnees});
       print("Envoi données");
-    } on FirebaseAuthException catch (e) {
-      print("Erreur: $e");
     } catch (e) {
       print("Erreur: $e");
     }
@@ -47,31 +42,70 @@ class _ParametersState extends State<Parameters> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x7E3474E0),
-        // appBar: AppBar(
-        //   title: const Text("Home"),
-        // ),
+        backgroundColor: const Color(0xFFEEEEEE),
+        appBar: AppBar(
+            backgroundColor: const Color(0x7E3474E0),
+            title: const Text("Paramètres"),
+            automaticallyImplyLeading: true),
         body: Center(
             child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
               child: MaterialButton(
                 minWidth: 170,
                 height: 40,
-                color: Color(0xFFEEEEEE),
-                onPressed: _logout,
+                color: const Color(0x7E3474E0),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const InformationsUser()));
+                },
                 child: const Text(
-                  "Se déconnecter",
+                  "Mes informations",
                   style: TextStyle(
-                    color: Color(0xCC3474E0),
+                    color: Color(0xFFEEEEEE),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
             Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              child: MaterialButton(
+                minWidth: 170,
+                height: 40,
+                color: const Color(0x7E3474E0),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListeUser()));
+                },
+                child: const Text(
+                  "Liste des utilisateurs",
+                  style: TextStyle(
+                    color: Color(0xFFEEEEEE),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              child: MaterialButton(
+                minWidth: 170,
+                height: 40,
+                color: const Color(0x7E3474E0),
+                onPressed: _logout,
+                child: const Text(
+                  "Se déconnecter",
+                  style: TextStyle(
+                    color: Color(0xFFEEEEEE),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                 child: Column(
                   children: [
                     TextFormField(
@@ -87,12 +121,12 @@ class _ParametersState extends State<Parameters> {
                     MaterialButton(
                       minWidth: 170,
                       height: 40,
-                      color: Color(0xFFEEEEEE),
+                      color: const Color(0x7E3474E0),
                       onPressed: _envoiDonnees,
                       child: const Text(
                         "Valider",
                         style: TextStyle(
-                          color: Color(0xCC3474E0),
+                          color: Color(0xFFEEEEEE),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -100,6 +134,45 @@ class _ParametersState extends State<Parameters> {
                   ],
                 )),
           ],
-        )));
+        )),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Color(0x7E3474E0),
+                ),
+                child: Text(
+                  'Wavel',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 36,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: const Text('Accueil'),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Accueil()));
+                },
+              ),
+              ListTile(
+                title: const Text('Voyages'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListeTravel()));
+                },
+              ),
+              ListTile(
+                title: const Text('Paramètres'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Parameters()));
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }

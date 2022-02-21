@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/User/parameters.dart';
+import 'package:wavel/pages/accueil.dart';
 import 'package:wavel/pages/homepage.dart';
-import 'package:wavel/pages/login.dart';
 // import 'package:firebase_database/firebase_database.dart';
 
 // import 'firebase_options.dart';
@@ -12,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     // Replace with actual values
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
       apiKey: "AIzaSyCTnghQY32rXe4rwNArM91ZsUayZjAdCcw",
       appId: "1:902964315607:web:ac805410b28fbd94a13792",
       messagingSenderId: "902964315607",
@@ -60,11 +59,11 @@ class LandingPage extends StatelessWidget {
 
                   if (user == null) {
                     // print(user);
-                    return Homepage();
+                    return const Homepage();
                   } else {
                     // print(user);
                     // return Homepage();
-                    return Parameters();
+                    return const Accueil();
                   }
                 }
 
