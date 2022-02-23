@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wavel/pages/User/parameters.dart';
+import 'package:wavel/pages/accueil.dart';
 import 'package:wavel/pages/homepage.dart';
 import 'package:wavel/pages/login.dart';
 
@@ -21,7 +22,7 @@ class _CreationUserState extends State<CreationUser> {
           .createUserWithEmailAndPassword(email: _email, password: _password);
       print("Création d'un utilisateur ok");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Parameters()));
+          .push(MaterialPageRoute(builder: (context) => Accueil()));
       // Navigator.of(context)
       //     .push(MaterialPageRoute(builder: (context) => Homepage()));
       // print("User: $userCredential");

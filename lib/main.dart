@@ -9,6 +9,7 @@ import 'package:wavel/pages/homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     // Replace with actual values
     options: const FirebaseOptions(
@@ -16,8 +17,12 @@ void main() async {
       appId: "1:902964315607:web:ac805410b28fbd94a13792",
       messagingSenderId: "902964315607",
       projectId: "flutter-project-44ff9",
+      storageBucket: "gs://flutter-project-44ff9.appspot.com/",
     ),
   );
+
+  // await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
