@@ -21,46 +21,61 @@ class _AccueilState extends State<Accueil> {
             backgroundColor: const Color(0x7E3474E0),
             title: const Text("Accueil"),
             automaticallyImplyLeading: true),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-              child: MaterialButton(
-                minWidth: 170,
-                height: 40,
-                color: const Color(0x7E3474E0),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AddTravel()));
-                },
-                child: const Text(
-                  "Publier un voyage",
-                  style: TextStyle(
-                    color: Color(0xFFEEEEEE),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-            StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('data').snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return ListView(
-                  children: snapshot.data!.docs.map((document) {
-                    return Container(
+        // body: Column(
+        //   children: [
+        //     Padding(
+        //       padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+        //       child: MaterialButton(
+        //         minWidth: 170,
+        //         height: 40,
+        //         color: const Color(0x7E3474E0),
+        //         onPressed: () {
+        //           Navigator.of(context).push(MaterialPageRoute(
+        //               builder: (context) => const AddTravel()));
+        //         },
+        //         child: const Text(
+        //           "Publier un voyage",
+        //           style: TextStyle(
+        //             color: Color(0xFFEEEEEE),
+        //             fontWeight: FontWeight.w500,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+
+        //   ],
+        // ),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('data').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView(
+              children: snapshot.data!.docs.map((document) {
+                return Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      height: 50.0,
+                      width: 200.0,
+                      decoration: BoxDecoration(
+                        color: Colors.black87,
+                        // border: Border.all(
+                        //   color: Colors.black,
+                        //   width: 2.0,
+                        // ),
+                        borderRadius: BorderRadius.circular(20.0),
+                        gradient: LinearGradient(
+                            colors: [Colors.white, Colors.white]),
+                      ),
                       child: Center(child: Text(document['text'])),
-                    );
-                  }).toList(),
-                );
-              },
-            ),
-          ],
+                    ));
+              }).toList(),
+            );
+          },
         ),
         drawer: Drawer(
           child: ListView(
