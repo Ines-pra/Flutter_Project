@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/User/parameters.dart';
+import 'package:wavel/pages/Others/parameters.dart';
 import 'package:wavel/pages/accueil.dart';
 import 'package:wavel/pages/homepage.dart';
 import 'package:wavel/pages/login.dart';

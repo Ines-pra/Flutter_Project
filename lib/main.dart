@@ -17,7 +17,7 @@ void main() async {
       appId: "1:902964315607:web:ac805410b28fbd94a13792",
       messagingSenderId: "902964315607",
       projectId: "flutter-project-44ff9",
-      storageBucket: "gs://flutter-project-44ff9.appspot.com/",
+      // storageBucket: "gs://flutter-project-44ff9.appspot.com/",
     ),
   );
 

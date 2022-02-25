@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wavel/pages/Others/help.dart';
 import 'package:wavel/pages/Travel/addTravel.dart';
 import 'package:wavel/pages/User/informationsUser.dart';
 import 'package:wavel/pages/Travel/listTravel.dart';
@@ -66,25 +67,6 @@ class _ParametersState extends State<Parameters> {
                 height: 40,
                 color: const Color(0x7E3474E0),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddTravel()));
-                },
-                child: const Text(
-                  "Publier un voyage",
-                  style: TextStyle(
-                    color: Color(0xFFEEEEEE),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-              child: MaterialButton(
-                minWidth: 170,
-                height: 40,
-                color: const Color(0x7E3474E0),
-                onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeUser()));
                 },
@@ -103,9 +85,30 @@ class _ParametersState extends State<Parameters> {
                 minWidth: 170,
                 height: 40,
                 color: const Color(0x7E3474E0),
-                onPressed: _logout,
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Help()));
+                },
                 child: const Text(
-                  "Se déconnecter",
+                  "Aide",
+                  style: TextStyle(
+                    color: Color(0xFFEEEEEE),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+              child: MaterialButton(
+                minWidth: 170,
+                height: 40,
+                color: const Color(0x7E3474E0),
+                onPressed: () {
+                  _logout();
+                },
+                child: const Text(
+                  "Déconnexion",
                   style: TextStyle(
                     color: Color(0xFFEEEEEE),
                     fontWeight: FontWeight.w500,
@@ -138,7 +141,14 @@ class _ParametersState extends State<Parameters> {
                 },
               ),
               ListTile(
-                title: const Text('Voyages'),
+                title: const Text('Partager un nouveau voyage'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddTravel()));
+                },
+              ),
+              ListTile(
+                title: const Text('Mes Voyages'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeTravel()));

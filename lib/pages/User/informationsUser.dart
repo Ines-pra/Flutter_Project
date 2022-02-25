@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/User/parameters.dart';
+import 'package:wavel/pages/Others/parameters.dart';
 
 class InformationsUser extends StatefulWidget {
   const InformationsUser({Key? key}) : super(key: key);

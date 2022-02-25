@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wavel/pages/Travel/addTravel.dart';
 
 import 'Travel/listTravel.dart';
-import 'User/parameters.dart';
+import 'Others/parameters.dart';
+import 'login.dart';
 
 class Accueil extends StatefulWidget {
   const Accueil({Key? key}) : super(key: key);
@@ -13,6 +15,19 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
+  Future<void> _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      print("Deconnexion");
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Login()));
+    } on FirebaseAuthException catch (e) {
+      print("Erreur: $e");
+    } catch (e) {
+      print("Erreur: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +61,7 @@ class _AccueilState extends State<Accueil> {
         //   ],
         // ),
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('data').snapshots(),
+          stream: FirebaseFirestore.instance.collection('travel').snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
@@ -57,9 +72,9 @@ class _AccueilState extends State<Accueil> {
             return ListView(
               children: snapshot.data!.docs.map((document) {
                 return Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      height: 50.0,
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                      // height: 50.0,
                       width: 200.0,
                       decoration: BoxDecoration(
                         color: Colors.black87,
@@ -71,8 +86,55 @@ class _AccueilState extends State<Accueil> {
                         gradient: LinearGradient(
                             colors: [Colors.white, Colors.white]),
                       ),
-                      child: Center(child: Text(document['text'])),
-                    ));
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Text(
+                                  document['name'],
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(document['date'] +
+                                  '  -  ' +
+                                  document['destination']),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(document['description']),
+                            ),
+                            // Text(document['destination']),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.network(
+                                    document['lienImage'],
+                                    height: 100,
+                                  )),
+                              // Text(document['lienImage']),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text('By ' + document['user']),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                );
               }).toList(),
             );
           },
@@ -100,7 +162,14 @@ class _AccueilState extends State<Accueil> {
                 },
               ),
               ListTile(
-                title: const Text('Voyages'),
+                title: const Text('Partager un nouveau voyage'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AddTravel()));
+                },
+              ),
+              ListTile(
+                title: const Text('Mes Voyages'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeTravel()));
