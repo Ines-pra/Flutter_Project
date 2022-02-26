@@ -1,5 +1,7 @@
+// ignore_for_file: avoid_print
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/Others/parameters.dart';
 
 class InformationsUser extends StatefulWidget {
   const InformationsUser({Key? key}) : super(key: key);
@@ -9,50 +11,86 @@ class InformationsUser extends StatefulWidget {
 }
 
 class _InformationsUserState extends State<InformationsUser> {
-  Future<void> _redirection() async {
-    try {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Parameters()));
-      print('Redirection vers la liste des utilisateurs !');
-    } catch (e) {
-      print("Erreur: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+    final userMail = user!.email;
+
     return Scaffold(
-        backgroundColor: Color(0x7E3474E0),
-        body: Center(
-            child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-              child: Text(
-                "Mes informations",
-                style: TextStyle(
-                  color: Color(0xCC3474E0),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-              child: MaterialButton(
-                minWidth: 170,
-                height: 40,
-                color: const Color(0x7E3474E0),
-                onPressed: _redirection,
-                child: const Text(
-                  "Retour aux paramètres",
-                  style: TextStyle(
-                    color: Color(0xFFEEEEEE),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )));
+      backgroundColor: const Color(0xFFEEEEEE),
+      appBar: AppBar(
+        backgroundColor: const Color(0x7E3474E0),
+        title: const Text("Mes informations"),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('user')
+            .where(("userMail"), isEqualTo: userMail)
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((document) {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                    // height: 50.0,
+                    width: 200.0,
+                    decoration: BoxDecoration(
+                      color: Colors.black87,
+                      borderRadius: BorderRadius.circular(20.0),
+                      gradient: const LinearGradient(
+                          colors: [Colors.white, Colors.white]),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              document['name'],
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          // ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              document['firstname'],
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              document['age'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              document['favoriteDestination'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+              );
+            }).toList(),
+          );
+        },
+      ),
+    );
   }
 }

@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wavel/pages/Travel/listWishTravel.dart';
@@ -35,14 +36,9 @@ class _AccueilState extends State<Accueil> {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                      // height: 50.0,
                       width: 200.0,
                       decoration: BoxDecoration(
                         color: Colors.black87,
-                        // border: Border.all(
-                        //   color: Colors.black,
-                        //   width: 2.0,
-                        // ),
                         borderRadius: BorderRadius.circular(20.0),
                         gradient: const LinearGradient(
                             colors: [Colors.white, Colors.white]),
@@ -53,8 +49,6 @@ class _AccueilState extends State<Accueil> {
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
-                              // child: Padding(
-                              // padding: const EdgeInsets.only(bottom: 12.0),
                               child: Text(
                                 document['name'],
                                 style: const TextStyle(
@@ -86,23 +80,16 @@ class _AccueilState extends State<Accueil> {
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
                                     document['lienImage'],
-                                    // height: 100,
                                   )),
-                              // Text(document['lienImage']),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
-                              child:
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(12.0),
-                                  //   child:
-                                  Text(
+                              child: Text(
                                 'By ' + document['user'],
                                 style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            // ),
                           ],
                         ),
                       )),

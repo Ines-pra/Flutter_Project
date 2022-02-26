@@ -1,12 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wavel/pages/Others/help.dart';
-import 'package:wavel/pages/Travel/addTravel.dart';
 import 'package:wavel/pages/User/informationsUser.dart';
-import 'package:wavel/pages/Travel/listTravel.dart';
 import 'package:wavel/pages/User/listUser.dart';
-import 'package:wavel/pages/accueil.dart';
 import '../login.dart';
 
 class Parameters extends StatefulWidget {
@@ -22,7 +20,7 @@ class _ParametersState extends State<Parameters> {
       await FirebaseAuth.instance.signOut();
       print("Deconnexion");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Login()));
+          .push(MaterialPageRoute(builder: (context) => const Login()));
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {

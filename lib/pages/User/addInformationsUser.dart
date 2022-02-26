@@ -1,39 +1,37 @@
 // ignore_for_file: avoid_print
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/User/addInformationsUser.dart';
-import 'package:wavel/pages/login.dart';
+import 'package:wavel/pages/accueil.dart';
 
-class CreationUser extends StatefulWidget {
-  const CreationUser({Key? key}) : super(key: key);
+class AddInformationsUser extends StatefulWidget {
+  const AddInformationsUser({Key? key}) : super(key: key);
 
   @override
-  State<CreationUser> createState() => _CreationUserState();
+  State<AddInformationsUser> createState() => _AddInformationsUserState();
 }
 
-late String _email;
-late String _password;
+late String _name;
+late String _firstname;
+late String _age;
+late String _favoriteDestination;
 
-class _CreationUserState extends State<CreationUser> {
-  Future<void> _createUser() async {
+class _AddInformationsUserState extends State<AddInformationsUser> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  Future<void> _addInformation() async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: _email, password: _password);
-      print("Création d'un utilisateur ok");
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const AddInformationsUser()));
-    } on FirebaseAuthException catch (e) {
-      print("Erreur: $e");
-    } catch (e) {
-      print("Erreur: $e");
-    }
-  }
-
-  Future<void> _login() async {
-    try {
+      final user = auth.currentUser;
+      final userMail = user!.email;
+      FirebaseFirestore.instance.collection('user').add({
+        'userMail': userMail,
+        'name': _name,
+        'firstname': _firstname,
+        'age': _age,
+        'favoriteDestination': _favoriteDestination
+      });
+      print("Ajout des informations d'un utilisateur ok");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const Login()));
-      print("Redirection vers la page de login !");
+          .push(MaterialPageRoute(builder: (context) => const Accueil()));
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -86,23 +84,24 @@ class _CreationUserState extends State<CreationUser> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 40),
                                             child: Text(
-                                              'Portail intergallactique',
+                                              'Compléter vos informations',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),
-                                          //label email
+
+                                          //label nom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
-                                                _email = value;
+                                                _name = value;
                                               },
                                               obscureText: false,
                                               decoration: const InputDecoration(
-                                                hintText: 'Email',
+                                                hintText: 'Nom',
                                                 enabledBorder:
                                                     UnderlineInputBorder(
                                                   borderSide: BorderSide(
@@ -135,17 +134,104 @@ class _CreationUserState extends State<CreationUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //label mot de passe
+                                          //label prenom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(30, 20, 30, 0),
+                                                .fromSTEB(30, 0, 50, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
-                                                _password = value;
+                                                _firstname = value;
                                               },
                                               obscureText: false,
                                               decoration: const InputDecoration(
-                                                hintText: 'Mot de passe ',
+                                                hintText: 'Prénom',
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                          //age
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 70, 0),
+                                            child: TextFormField(
+                                              onChanged: (value) {
+                                                _age = value;
+                                              },
+                                              obscureText: false,
+                                              decoration: const InputDecoration(
+                                                hintText: 'Age',
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                          //destination préféré
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 90, 0),
+                                            child: TextFormField(
+                                              onChanged: (value) {
+                                                _favoriteDestination = value;
+                                              },
+                                              obscureText: false,
+                                              decoration: const InputDecoration(
+                                                hintText:
+                                                    'Destination préférée',
                                                 enabledBorder:
                                                     UnderlineInputBorder(
                                                   borderSide: BorderSide(
@@ -186,7 +272,7 @@ class _CreationUserState extends State<CreationUser> {
                                               minWidth: 170,
                                               height: 40,
                                               color: const Color(0xCC3474E0),
-                                              onPressed: _createUser,
+                                              onPressed: _addInformation,
                                               child: const Text(
                                                 "Créer",
                                                 style: TextStyle(
@@ -200,23 +286,6 @@ class _CreationUserState extends State<CreationUser> {
                                       ))
                                 ]),
                           )),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                        child: MaterialButton(
-                          minWidth: 170,
-                          height: 40,
-                          color: const Color(0xFFEEEEEE),
-                          onPressed: _login,
-                          child: const Text(
-                            "Se connecter",
-                            style: TextStyle(
-                              color: Color(0xCC3474E0),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
                     ]))));
   }
 }

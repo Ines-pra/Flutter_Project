@@ -1,13 +1,12 @@
+// ignore_for_file: avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/Others/parameters.dart';
 import 'package:wavel/pages/accueil.dart';
 
 import 'creationUser.dart';
-import 'homepage.dart';
 
 class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -20,7 +19,7 @@ class _LoginState extends State<Login> {
   Future<void> _createUser() async {
     try {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => CreationUser()));
+          .push(MaterialPageRoute(builder: (context) => const CreationUser()));
       print('Redirection vers la page de connexion !');
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
@@ -31,14 +30,12 @@ class _LoginState extends State<Login> {
 
   Future<void> _login() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: _email, password: _password);
 
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Accueil()));
+          .push(MaterialPageRoute(builder: (context) => const Accueil()));
 
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => Homepage()));
       print("Connexion d'un utilisateur ok");
 
       // print("User: $userCredential");
@@ -52,7 +49,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x7E3474E0),
+        backgroundColor: const Color(0x7E3474E0),
         // appBar: AppBar(
         //   title: const Text("Login"),
         // ),
@@ -64,12 +61,12 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
-                              color: Color(0xFFEEEEEE),
+                              color: const Color(0xFFEEEEEE),
                               boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 10,
@@ -105,9 +102,8 @@ class _LoginState extends State<Login> {
                                           ),
                                           //label email
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 30, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _email = value;
@@ -149,9 +145,8 @@ class _LoginState extends State<Login> {
                                           ),
                                           //label mot de passe
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 20, 30, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 20, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _password = value;
@@ -193,13 +188,12 @@ class _LoginState extends State<Login> {
                                           ),
                                           //bouton connexion
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 40, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 40, 0, 0),
                                             child: MaterialButton(
                                               minWidth: 170,
                                               height: 40,
-                                              color: Color(0xCC3474E0),
+                                              color: const Color(0xCC3474E0),
                                               onPressed: _login,
                                               child: const Text(
                                                 "Connexion",
@@ -215,11 +209,12 @@ class _LoginState extends State<Login> {
                                 ]),
                           )),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                         child: MaterialButton(
                           minWidth: 170,
                           height: 40,
-                          color: Color(0xFFEEEEEE),
+                          color: const Color(0xFFEEEEEE),
                           onPressed: _createUser,
                           child: const Text(
                             "Créer son compte",

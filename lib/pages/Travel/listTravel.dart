@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,6 @@ class _ListeTravelState extends State<ListeTravel> {
             );
           }
           return ListView(
-            // querySnapshot.docs.map((doc) => doc.get('email')).toList()
             children: snapshot.data!.docs.map((document) {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -43,10 +43,6 @@ class _ListeTravelState extends State<ListeTravel> {
                     width: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.black87,
-                      // border: Border.all(
-                      //   color: Colors.black,
-                      //   width: 2.0,
-                      // ),
                       borderRadius: BorderRadius.circular(20.0),
                       gradient: const LinearGradient(
                           colors: [Colors.white, Colors.white]),
