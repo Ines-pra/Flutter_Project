@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wavel/pages/Travel/addTravel.dart';
-
+import 'package:wavel/pages/Travel/listWishTravel.dart';
+import 'Travel/addTravel.dart';
 import 'Travel/listTravel.dart';
 import 'Others/parameters.dart';
-import 'login.dart';
 
 class Accueil extends StatefulWidget {
   const Accueil({Key? key}) : super(key: key);
@@ -15,19 +13,6 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  Future<void> _logout() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      print("Deconnexion");
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Login()));
-    } on FirebaseAuthException catch (e) {
-      print("Erreur: $e");
-    } catch (e) {
-      print("Erreur: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,30 +21,6 @@ class _AccueilState extends State<Accueil> {
             backgroundColor: const Color(0x7E3474E0),
             title: const Text("Accueil"),
             automaticallyImplyLeading: true),
-        // body: Column(
-        //   children: [
-        //     Padding(
-        //       padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-        //       child: MaterialButton(
-        //         minWidth: 170,
-        //         height: 40,
-        //         color: const Color(0x7E3474E0),
-        //         onPressed: () {
-        //           Navigator.of(context).push(MaterialPageRoute(
-        //               builder: (context) => const AddTravel()));
-        //         },
-        //         child: const Text(
-        //           "Publier un voyage",
-        //           style: TextStyle(
-        //             color: Color(0xFFEEEEEE),
-        //             fontWeight: FontWeight.w500,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-
-        //   ],
-        // ),
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('travel').snapshots(),
           builder:
@@ -83,54 +44,65 @@ class _AccueilState extends State<Accueil> {
                         //   width: 2.0,
                         // ),
                         borderRadius: BorderRadius.circular(20.0),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                             colors: [Colors.white, Colors.white]),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Column(
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 12.0),
-                                child: Text(
-                                  document['name'],
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              // child: Padding(
+                              // padding: const EdgeInsets.only(bottom: 12.0),
+                              child: Text(
+                                document['name'],
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                             ),
+                            // ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(document['date'] +
-                                  '  -  ' +
-                                  document['destination']),
+                              child: Text(
+                                document['date'] +
+                                    '  -  ' +
+                                    document['destination'],
+                                style: const TextStyle(fontSize: 12),
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(12.0),
-                              child: Text(document['description']),
+                              child: Text(
+                                document['description'],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 14),
+                              ),
                             ),
-                            // Text(document['destination']),
+
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
                                     document['lienImage'],
-                                    height: 100,
+                                    // height: 100,
                                   )),
                               // Text(document['lienImage']),
                             ),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text('By ' + document['user']),
+                              child:
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(12.0),
+                                  //   child:
+                                  Text(
+                                'By ' + document['user'],
+                                style: const TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                             ),
+                            // ),
                           ],
                         ),
                       )),
@@ -173,6 +145,13 @@ class _AccueilState extends State<Accueil> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeTravel()));
+                },
+              ),
+              ListTile(
+                title: const Text('Liste de mes envies'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListeWishTravel()));
                 },
               ),
               ListTile(

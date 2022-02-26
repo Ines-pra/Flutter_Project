@@ -67,7 +67,7 @@ class _AddTravelState extends State<AddTravel> {
                           },
                           obscureText: false,
                           decoration: const InputDecoration(
-                            hintText: 'Nom',
+                            hintText: 'Titre',
                           ),
                           textAlign: TextAlign.start,
                         )),
@@ -87,18 +87,6 @@ class _AddTravelState extends State<AddTravel> {
                         padding: const EdgeInsets.all(16.0),
                         child: TextFormField(
                           onChanged: (value) {
-                            _description = value;
-                          },
-                          obscureText: false,
-                          decoration: const InputDecoration(
-                            hintText: 'Description',
-                          ),
-                          textAlign: TextAlign.start,
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextFormField(
-                          onChanged: (value) {
                             _date = value;
                           },
                           obscureText: false,
@@ -107,6 +95,19 @@ class _AddTravelState extends State<AddTravel> {
                           ),
                           textAlign: TextAlign.start,
                         )),
+                    Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            _description = value;
+                          },
+                          obscureText: false,
+                          decoration: const InputDecoration(
+                            hintText: 'Description',
+                          ),
+                          textAlign: TextAlign.start,
+                        )),
+
                     // Padding(
                     //     padding: const EdgeInsets.all(16.0),
                     //     child: InputDatePickerFormField(
