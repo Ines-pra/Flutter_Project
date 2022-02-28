@@ -1,10 +1,12 @@
 // ignore_for_file: avoid_print
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:wavel/pages/Travel/listWishTravel.dart';
 import 'Travel/addTravel.dart';
 import 'Travel/listTravel.dart';
 import 'Others/parameters.dart';
+import 'dart:io';
 
 class Accueil extends StatefulWidget {
   const Accueil({Key? key}) : super(key: key);
@@ -14,6 +16,29 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
+  // static Future<String> get _localPath async {
+  //   Directory directory = await getApplicationDocumentsDirectory();
+  //   print(directory.path);
+  //   return directory.path;
+  // }
+
+  // static Future<File> get _localFile async {
+  //   final path = await _localPath;
+  //   print('Path : $path');
+  //   return File('$path/fichier.txt');
+  // }
+
+  // static Future<String?> lectureFichier() async {
+  //   try {
+  //     final file = await _localFile;
+  //     final contents = await file.readAsString();
+  //     print('ok fichier !');
+  //     return contents;
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,6 +173,12 @@ class _AccueilState extends State<Accueil> {
                       builder: (context) => const Parameters()));
                 },
               ),
+              // ListTile(
+              //   title: const Text('Fichier local'),
+              //   onTap: () {
+              //     lectureFichier();
+              //   },
+              // ),
             ],
           ),
         ));

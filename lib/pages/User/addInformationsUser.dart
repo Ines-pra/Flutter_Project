@@ -1,4 +1,6 @@
 // ignore_for_file: avoid_print
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +24,19 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
     try {
       final user = auth.currentUser;
       final userMail = user!.email;
-      FirebaseFirestore.instance.collection('user').add({
+
+      final DocumentReference documentReference =
+          await FirebaseFirestore.instance.collection('user').add({
+        'id': "",
+      });
+      final String _id = documentReference.id;
+      FirebaseFirestore.instance.collection('user').doc(_id).set({
         'userMail': userMail,
         'name': _name,
         'firstname': _firstname,
         'age': _age,
-        'favoriteDestination': _favoriteDestination
+        'favoriteDestination': _favoriteDestination,
+        'id': _id
       });
       print("Ajout des informations d'un utilisateur ok");
       Navigator.of(context)

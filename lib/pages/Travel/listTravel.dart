@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wavel/pages/Travel/updateTravel.dart';
 
 class ListeTravel extends StatefulWidget {
   const ListeTravel({Key? key}) : super(key: key);
@@ -11,6 +12,27 @@ class ListeTravel extends StatefulWidget {
 }
 
 class _ListeTravelState extends State<ListeTravel> {
+  Future<String?> updateTravel(documentId) async {
+    try {
+      print('Voyage modifié $documentId');
+      // Navigator.of(context).push(
+      //     MaterialPageRoute(builder: (context) => UpdateTravel(documentId)));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String?> deleteTravel(documentId) async {
+    try {
+      FirebaseFirestore.instance.collection('travel').doc(documentId).delete();
+      print('Voyage supprimé $documentId');
+      // Navigator.of(context).push(
+      //     MaterialPageRoute(builder: (context,document.id) => const UpdateTravel()));
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -40,7 +62,7 @@ class _ListeTravelState extends State<ListeTravel> {
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
                     // height: 50.0,
-                    width: 200.0,
+                    // width: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.black87,
                       borderRadius: BorderRadius.circular(20.0),
@@ -85,6 +107,47 @@ class _ListeTravelState extends State<ListeTravel> {
                                 child: Image.network(
                                   document['lienImage'],
                                 )),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: MaterialButton(
+                                  minWidth: 120,
+                                  height: 40,
+                                  color: const Color(0xFFEF5350),
+                                  onPressed: () {
+                                    deleteTravel(document.id);
+                                  },
+                                  child: const Text(
+                                    "Supprimer ?",
+                                    style: TextStyle(
+                                      color: Color(0xFFEEEEEE),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(12.0),
+                              //   child: MaterialButton(
+                              //     minWidth: 120,
+                              //     height: 40,
+                              //     color: const Color(0xFFC5E1A5),
+                              //     onPressed: () {
+                              //       updateTravel(document.id);
+                              //     },
+                              //     child: const Text(
+                              //       "Modifier ?",
+                              //       style: TextStyle(
+                              //         color: Colors.black87,
+                              //         fontWeight: FontWeight.w500,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
                         ],
                       ),
