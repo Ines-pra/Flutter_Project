@@ -19,8 +19,6 @@ late String _date;
 late String _lienImage;
 
 class _AddTravelState extends State<AddTravel> {
-  File? image;
-
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;

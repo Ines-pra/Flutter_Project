@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_print
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:wavel/pages/Others/help.dart';
 import 'package:wavel/pages/Travel/listWishTravel.dart';
+import 'package:wavel/pages/User/listUser.dart';
 import 'Travel/addTravel.dart';
 import 'Travel/listTravel.dart';
-import 'Others/parameters.dart';
-import 'dart:io';
+import 'login.dart';
 
 class Accueil extends StatefulWidget {
   const Accueil({Key? key}) : super(key: key);
@@ -16,31 +17,88 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  // static Future<String> get _localPath async {
-  //   Directory directory = await getApplicationDocumentsDirectory();
-  //   print(directory.path);
-  //   return directory.path;
-  // }
-
-  // static Future<File> get _localFile async {
-  //   final path = await _localPath;
-  //   print('Path : $path');
-  //   return File('$path/fichier.txt');
-  // }
-
-  // static Future<String?> lectureFichier() async {
-  //   try {
-  //     final file = await _localFile;
-  //     final contents = await file.readAsString();
-  //     print('ok fichier !');
-  //     return contents;
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+    final userMail = user!.email;
+
+    Future<void> _logout() async {
+      try {
+        await FirebaseAuth.instance.signOut();
+        print("Deconnexion");
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const Login()));
+      } on FirebaseAuthException catch (e) {
+        print("Erreur: $e");
+      } catch (e) {
+        print("Erreur: $e");
+      }
+    }
+
+    Future<void> _deleteWish(id, title, destination, lienImage) async {
+      try {
+        // FirebaseFirestore.instance.collection('wish').add({
+        //   'id': id,
+        //   'user': userMail,
+        //   'titre': title,
+        //   'destination': destination,
+        //   'lienImage': lienImage
+        // });
+        FirebaseFirestore.instance
+            .collection("wish")
+            .get()
+            .then((querySnapshot) {
+          querySnapshot.docs.forEach((result) {
+            // print(result.data());
+            FirebaseFirestore.instance
+                .collection("wish")
+                .where("id", isEqualTo: id)
+                .where("user", isEqualTo: userMail)
+                // .doc(result.id)
+                // .collection("id")
+                .get()
+                .then((querySnapshot) {
+              // for (var result in querySnapshot.docs) {
+              // FirebaseFirestore.instance
+              //     .collection('wish')
+              //     .doc(result.id)
+              //     .delete();
+              if (result == "")
+                print('vide');
+              else {
+                FirebaseFirestore.instance
+                    .collection('wish')
+                    .doc(result.id)
+                    .delete();
+              }
+
+              // print('delete');
+              // }
+            });
+          });
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    Future<void> _wish(id, destination, lienImage) async {
+      try {
+        FirebaseFirestore.instance.collection('wish').doc(id + userMail).set({
+          'id': id,
+          'user': userMail,
+          'destination': destination,
+          'lienImage': lienImage
+        });
+        print("New Wish");
+      } on FirebaseAuthException catch (e) {
+        print("Erreur: $e");
+      } catch (e) {
+        print("Erreur: $e");
+      }
+    }
+
     return Scaffold(
         backgroundColor: const Color(0xFFEEEEEE),
         appBar: AppBar(
@@ -48,7 +106,10 @@ class _AccueilState extends State<Accueil> {
             title: const Text("Accueil"),
             automaticallyImplyLeading: true),
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('travel').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('travel')
+              .where(("user"), isNotEqualTo: userMail)
+              .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
@@ -107,13 +168,31 @@ class _AccueilState extends State<Accueil> {
                                     document['lienImage'],
                                   )),
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'By ' + document['user'],
-                                style: const TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
+                            Row(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: IconButton(
+                                          icon: Icon(Icons.flight_takeoff),
+                                          onPressed: () {
+                                            _wish(
+                                                document.id,
+                                                document['destination'],
+                                                document['lienImage']);
+                                          })),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'By ' + document['user'],
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -146,6 +225,13 @@ class _AccueilState extends State<Accueil> {
                 },
               ),
               ListTile(
+                title: const Text('Mes informations'),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ListeWishTravel()));
+                },
+              ),
+              ListTile(
                 title: const Text('Partager un nouveau voyage'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -167,18 +253,23 @@ class _AccueilState extends State<Accueil> {
                 },
               ),
               ListTile(
-                title: const Text('Paramètres'),
+                title: const Text('Liste des voyageurs'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Parameters()));
+                      builder: (context) => const ListeUser()));
                 },
               ),
-              // ListTile(
-              //   title: const Text('Fichier local'),
-              //   onTap: () {
-              //     lectureFichier();
-              //   },
-              // ),
+              ListTile(
+                title: const Text('Aide'),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Help()));
+                },
+              ),
+              ListTile(
+                title: const Text('Déconexion'),
+                onTap: _logout,
+              ),
             ],
           ),
         ));

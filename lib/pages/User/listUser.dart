@@ -16,7 +16,7 @@ class _ListeUserState extends State<ListeUser> {
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
         backgroundColor: const Color(0x7E3474E0),
-        title: const Text("Mes informations"),
+        title: const Text("Voyageuses - Voyageurs"),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('user').snapshots(),
