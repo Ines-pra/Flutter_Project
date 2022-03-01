@@ -18,6 +18,17 @@ class _InformationsUserState extends State<InformationsUser> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final user = auth.currentUser;
     final userMail = user!.email;
+    var compteur = 0;
+    final countTravel = FirebaseFirestore.instance
+        .collection("travel")
+        .where("user", isEqualTo: userMail)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        compteur++;
+      });
+      print(compteur);
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
@@ -56,37 +67,59 @@ class _InformationsUserState extends State<InformationsUser> {
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
                                 children: [
+                                  Row(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          document['name'] + '  ',
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          document['firstname'],
+                                          style: const TextStyle(fontSize: 14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      document['name'],
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 12.0),
+                                      child: Text(
+                                        'Age : ' + document['age'],
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
                                     ),
                                   ),
-                                  // ),
                                   Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      document['firstname'],
-                                      style: const TextStyle(fontSize: 12),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        'Destination favorite : ' +
+                                            document['favoriteDestination'],
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      document['age'],
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      document['favoriteDestination'],
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(fontSize: 14),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        'Nombre de voyage partagé : $compteur',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
                                     ),
                                   ),
                                 ],

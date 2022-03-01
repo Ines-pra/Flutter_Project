@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ListeUser extends StatefulWidget {
@@ -12,6 +13,18 @@ class ListeUser extends StatefulWidget {
 class _ListeUserState extends State<ListeUser> {
   @override
   Widget build(BuildContext context) {
+    // final FirebaseAuth auth = FirebaseAuth.instance;
+    // final user = auth.currentUser;
+    // final userMail = user!.email;
+
+    // final countTravel = FirebaseFirestore.instance
+    //     .collection("travel")
+    //     .get()
+    //     .then((querySnapshot) {
+    //   querySnapshot.docs.forEach((result) {
+    //     print(result.data());
+    //   });
+    // });
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
@@ -31,7 +44,6 @@ class _ListeUserState extends State<ListeUser> {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
-                    // height: 50.0,
                     width: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.black87,
@@ -43,36 +55,35 @@ class _ListeUserState extends State<ListeUser> {
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              document['name'],
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          // ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              document['firstname'],
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              document['age'],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 14),
-                            ),
+                          Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  document['name'] + '  ',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  document['firstname'],
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              document['favoriteDestination'],
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 14),
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Destination favorite : ' +
+                                    document['favoriteDestination'],
+                                style: const TextStyle(fontSize: 12),
+                              ),
                             ),
                           ),
                         ],

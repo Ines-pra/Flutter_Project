@@ -2,8 +2,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wavel/pages/Others/help.dart';
+import 'package:wavel/pages/help.dart';
 import 'package:wavel/pages/Travel/listWishTravel.dart';
+import 'package:wavel/pages/User/informationsUser.dart';
 import 'package:wavel/pages/User/listUser.dart';
 import 'Travel/addTravel.dart';
 import 'Travel/listTravel.dart';
@@ -175,7 +176,8 @@ class _AccueilState extends State<Accueil> {
                                   child: Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: IconButton(
-                                          icon: Icon(Icons.flight_takeoff),
+                                          icon:
+                                              const Icon(Icons.flight_takeoff),
                                           onPressed: () {
                                             _wish(
                                                 document.id,
@@ -228,7 +230,7 @@ class _AccueilState extends State<Accueil> {
                 title: const Text('Mes informations'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ListeWishTravel()));
+                      builder: (context) => const InformationsUser()));
                 },
               ),
               ListTile(

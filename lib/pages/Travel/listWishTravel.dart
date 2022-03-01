@@ -2,8 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wavel/pages/Others/help.dart';
-import 'package:wavel/pages/User/listUser.dart';
 
 class ListeWishTravel extends StatefulWidget {
   const ListeWishTravel({Key? key}) : super(key: key);
