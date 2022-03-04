@@ -30,6 +30,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
           await FirebaseFirestore.instance.collection('user').add({
         'id': "",
       });
+
       final String _id = documentReference.id;
       FirebaseFirestore.instance.collection('user').doc(_id).set({
         'userMail': userMail,

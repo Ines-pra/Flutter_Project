@@ -39,57 +39,48 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0x7E3474E0),
-      // appBar: AppBar(
-      //   title: const Text("Home"),
-      // ),
-      body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-              child: Image.asset(
-                'assets/images/logo_wavel.png',
-                height: 225,
-                width: 225,
-              ),
+        backgroundColor: const Color(0x7E3474E0),
+        // appBar: AppBar(
+        //   title: const Text("Home"),
+        // ),
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? _buildChampsTextePortrait()
+                : _buildChampsTextePaysage();
+          },
+        ));
+  }
 
-              // Text(
-              //   "Homepage",
-              //   style: TextStyle(
-              //     color: Color(0xCC3474E0),
-              //     fontWeight: FontWeight.w500,
-              //   ),
-              // ),
+  Widget _buildChampsTextePortrait() {
+    return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+            child: Image.asset(
+              'assets/images/logo_wavel.png',
+              height: 225,
+              width: 225,
             ),
-            Padding(
-              // padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
-              padding: const EdgeInsets.all(20),
-              child: Align(
-                  alignment: const AlignmentDirectional(0, 0),
-                  child: Column(
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: MaterialButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                                side: const BorderSide(
-                                    color: Colors.transparent)),
-                            minWidth: 170,
-                            height: 40,
-                            color: const Color(0xFFEEEEEE),
-                            onPressed: _login,
-                            child: const Text(
-                              "Se connecter",
-                              style: TextStyle(
-                                color: Color(0xCC3474E0),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )),
-                      Padding(
+
+            // Text(
+            //   "Homepage",
+            //   style: TextStyle(
+            //     color: Color(0xCC3474E0),
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            // ),
+          ),
+          Padding(
+            // padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+            padding: const EdgeInsets.all(20),
+            child: Align(
+                alignment: const AlignmentDirectional(0, 0),
+                child: Column(
+                  children: [
+                    Padding(
                         padding: const EdgeInsets.all(20),
                         child: MaterialButton(
                           shape: RoundedRectangleBorder(
@@ -99,20 +90,97 @@ class _HomepageState extends State<Homepage> {
                           minWidth: 170,
                           height: 40,
                           color: const Color(0xFFEEEEEE),
-                          onPressed: _createUser,
+                          onPressed: _login,
                           child: const Text(
-                            "S'enregistrer",
+                            "Se connecter",
                             style: TextStyle(
                               color: Color(0xCC3474E0),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(color: Colors.transparent)),
+                        minWidth: 170,
+                        height: 40,
+                        color: const Color(0xFFEEEEEE),
+                        onPressed: _createUser,
+                        child: const Text(
+                          "S'enregistrer",
+                          style: TextStyle(
+                            color: Color(0xCC3474E0),
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      )
-                    ],
-                  )),
+                      ),
+                    )
+                  ],
+                )),
+          ),
+        ]);
+  }
+
+  Widget _buildChampsTextePaysage() {
+    return Row(
+        // mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 75),
+            child: Image.asset(
+              'assets/images/logo_wavel.png',
+              height: 225,
+              width: 225,
             ),
-          ]),
-    );
+          ),
+          Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            side: const BorderSide(color: Colors.transparent)),
+                        minWidth: 170,
+                        height: 40,
+                        color: const Color(0xFFEEEEEE),
+                        onPressed: _login,
+                        child: const Text(
+                          "Se connecter",
+                          style: TextStyle(
+                            color: Color(0xCC3474E0),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: MaterialButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: const BorderSide(color: Colors.transparent)),
+                      minWidth: 170,
+                      height: 40,
+                      color: const Color(0xFFEEEEEE),
+                      onPressed: _createUser,
+                      child: const Text(
+                        "S'enregistrer",
+                        style: TextStyle(
+                          color: Color(0xCC3474E0),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )),
+        ]);
   }
 }

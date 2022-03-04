@@ -27,6 +27,19 @@ class _AddTravelState extends State<AddTravel> {
       try {
         final user = auth.currentUser;
         final userMail = user!.email;
+
+        if (_name == '') {
+          _name = ' ';
+        } else if (_description == '') {
+          _description = ' ';
+        } else if (_destination == '') {
+          _destination = ' ';
+        } else if (_date == '') {
+          _date = ' ';
+        } else if (_lienImage == '') {
+          _lienImage = ' ';
+        }
+
         FirebaseFirestore.instance
             .collection("user")
             .where("userMail", isEqualTo: userMail)
