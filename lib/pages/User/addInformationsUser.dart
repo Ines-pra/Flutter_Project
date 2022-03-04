@@ -1,44 +1,46 @@
 // ignore_for_file: avoid_print
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wavel/pages/accueil.dart';
 
-import 'creationUser.dart';
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class AddInformationsUser extends StatefulWidget {
+  const AddInformationsUser({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<AddInformationsUser> createState() => _AddInformationsUserState();
 }
 
-late String _email;
-late String _password;
+late String _name;
+late String _firstname;
+late String _age;
+late String _favoriteDestination;
 
-class _LoginState extends State<Login> {
-  Future<void> _createUser() async {
+class _AddInformationsUserState extends State<AddInformationsUser> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  Future<void> _addInformation() async {
     try {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const CreationUser()));
-      print('Redirection vers la page de connexion !');
-    } on FirebaseAuthException catch (e) {
-      print("Erreur: $e");
-    } catch (e) {
-      print("Erreur: $e");
-    }
-  }
+      final user = auth.currentUser;
+      final userMail = user!.email;
 
-  Future<void> _login() async {
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password);
-
+      final DocumentReference documentReference =
+          await FirebaseFirestore.instance.collection('user').add({
+        'id': "",
+      });
+      final String _id = documentReference.id;
+      FirebaseFirestore.instance.collection('user').doc(_id).set({
+        'userMail': userMail,
+        'name': _name,
+        'firstname': _firstname,
+        'age': _age,
+        'favoriteDestination': _favoriteDestination,
+        'id': _id
+      });
+      print("Ajout des informations d'un utilisateur ok");
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const Accueil()));
-
-      print("Connexion d'un utilisateur ok");
-
-      // print("User: $userCredential");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -50,9 +52,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0x7E3474E0),
-        // appBar: AppBar(
-        //   title: const Text("Login"),
-        // ),
         body: SafeArea(
             child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
@@ -94,23 +93,24 @@ class _LoginState extends State<Login> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 40),
                                             child: Text(
-                                              'Portail intergallactique',
+                                              'Compléter vos informations',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),
-                                          //label email
+
+                                          //label nom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
-                                                _email = value;
+                                                _name = value;
                                               },
                                               obscureText: false,
                                               decoration: const InputDecoration(
-                                                hintText: 'Email',
+                                                hintText: 'Nom',
                                                 enabledBorder:
                                                     UnderlineInputBorder(
                                                   borderSide: BorderSide(
@@ -143,17 +143,104 @@ class _LoginState extends State<Login> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //label mot de passe
+                                          //label prenom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(30, 20, 30, 0),
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
-                                                _password = value;
+                                                _firstname = value;
                                               },
                                               obscureText: false,
                                               decoration: const InputDecoration(
-                                                hintText: 'Mot de passe ',
+                                                hintText: 'Prénom',
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                          //age
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 30, 0),
+                                            child: TextFormField(
+                                              onChanged: (value) {
+                                                _age = value;
+                                              },
+                                              obscureText: false,
+                                              decoration: const InputDecoration(
+                                                hintText: 'Age',
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                          //destination préféré
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 30, 0),
+                                            child: TextFormField(
+                                              onChanged: (value) {
+                                                _favoriteDestination = value;
+                                              },
+                                              obscureText: false,
+                                              decoration: const InputDecoration(
+                                                hintText:
+                                                    'Destination préférée',
                                                 enabledBorder:
                                                     UnderlineInputBorder(
                                                   borderSide: BorderSide(
@@ -192,11 +279,11 @@ class _LoginState extends State<Login> {
                                                 .fromSTEB(0, 40, 0, 0),
                                             child: MaterialButton(
                                               minWidth: 170,
-                                              height: 40,
+                                              height: 50,
                                               color: const Color(0xCC3474E0),
-                                              onPressed: _login,
+                                              onPressed: _addInformation,
                                               child: const Text(
-                                                "Connexion",
+                                                "Créer",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w500,
@@ -208,23 +295,6 @@ class _LoginState extends State<Login> {
                                       ))
                                 ]),
                           )),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                        child: MaterialButton(
-                          minWidth: 170,
-                          height: 40,
-                          color: const Color(0xFFEEEEEE),
-                          onPressed: _createUser,
-                          child: const Text(
-                            "Créer son compte",
-                            style: TextStyle(
-                              color: Color(0xCC3474E0),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
                     ]))));
   }
 }

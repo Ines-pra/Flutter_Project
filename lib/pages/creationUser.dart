@@ -1,30 +1,32 @@
+// ignore_for_file: avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/User/parameters.dart';
-import 'package:wavel/pages/homepage.dart';
+import 'package:wavel/pages/User/addInformationsUser.dart';
 import 'package:wavel/pages/login.dart';
 
-class Connexion extends StatefulWidget {
-  Connexion({Key? key}) : super(key: key);
+class CreationUser extends StatefulWidget {
+  const CreationUser({Key? key}) : super(key: key);
 
   @override
-  State<Connexion> createState() => _ConnexionState();
+  State<CreationUser> createState() => _CreationUserState();
 }
 
 late String _email;
 late String _password;
 
-class _ConnexionState extends State<Connexion> {
+class _CreationUserState extends State<CreationUser> {
   Future<void> _createUser() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: _email, password: _password);
-      print("Création d'un utilisateur ok");
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Parameters()));
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => Homepage()));
-      // print("User: $userCredential");
+      RegExp regex = RegExp(
+          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+      if (regex.hasMatch(_password)) {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: _email, password: _password);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AddInformationsUser()));
+        print("Création d'un utilisateur ok");
+      } else
+        print('erreur mdp ! ');
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -35,7 +37,7 @@ class _ConnexionState extends State<Connexion> {
   Future<void> _login() async {
     try {
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Login()));
+          .push(MaterialPageRoute(builder: (context) => const Login()));
       print("Redirection vers la page de login !");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
@@ -47,10 +49,7 @@ class _ConnexionState extends State<Connexion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0x7E3474E0),
-        // appBar: AppBar(
-        //   title: const Text("Login"),
-        // ),
+        backgroundColor: const Color(0x7E3474E0),
         body: SafeArea(
             child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
@@ -59,12 +58,12 @@ class _ConnexionState extends State<Connexion> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Align(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             height: MediaQuery.of(context).size.height * 0.5,
                             decoration: BoxDecoration(
-                              color: Color(0xFFEEEEEE),
+                              color: const Color(0xFFEEEEEE),
                               boxShadow: const [
                                 BoxShadow(
                                   blurRadius: 10,
@@ -100,9 +99,8 @@ class _ConnexionState extends State<Connexion> {
                                           ),
                                           //label email
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 30, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _email = value;
@@ -144,9 +142,8 @@ class _ConnexionState extends State<Connexion> {
                                           ),
                                           //label mot de passe
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 20, 30, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 20, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _password = value;
@@ -188,13 +185,12 @@ class _ConnexionState extends State<Connexion> {
                                           ),
                                           //bouton connexion
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 40, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 40, 0, 0),
                                             child: MaterialButton(
                                               minWidth: 170,
                                               height: 40,
-                                              color: Color(0xCC3474E0),
+                                              color: const Color(0xCC3474E0),
                                               onPressed: _createUser,
                                               child: const Text(
                                                 "Créer",
@@ -210,11 +206,12 @@ class _ConnexionState extends State<Connexion> {
                                 ]),
                           )),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                         child: MaterialButton(
                           minWidth: 170,
                           height: 40,
-                          color: Color(0xFFEEEEEE),
+                          color: const Color(0xFFEEEEEE),
                           onPressed: _login,
                           child: const Text(
                             "Se connecter",
