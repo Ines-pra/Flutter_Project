@@ -148,7 +148,7 @@ class _CreationUserState extends State<CreationUser> {
                                               onChanged: (value) {
                                                 _password = value;
                                               },
-                                              obscureText: false,
+                                              obscureText: true,
                                               decoration: const InputDecoration(
                                                 hintText: 'Mot de passe ',
                                                 enabledBorder:

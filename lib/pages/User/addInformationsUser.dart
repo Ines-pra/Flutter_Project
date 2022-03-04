@@ -13,6 +13,7 @@ class AddInformationsUser extends StatefulWidget {
   State<AddInformationsUser> createState() => _AddInformationsUserState();
 }
 
+late String _pseudo;
 late String _name;
 late String _firstname;
 late String _age;
@@ -32,6 +33,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
       final String _id = documentReference.id;
       FirebaseFirestore.instance.collection('user').doc(_id).set({
         'userMail': userMail,
+        'pseudo': _pseudo,
         'name': _name,
         'firstname': _firstname,
         'age': _age,
@@ -97,6 +99,50 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+
+                                          //label pseudo
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(30, 0, 30, 0),
+                                            child: TextFormField(
+                                              onChanged: (value) {
+                                                _pseudo = value;
+                                              },
+                                              obscureText: false,
+                                              decoration: const InputDecoration(
+                                                hintText: 'Pseudo',
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color(0x4D050505),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              textAlign: TextAlign.start,
                                             ),
                                           ),
 

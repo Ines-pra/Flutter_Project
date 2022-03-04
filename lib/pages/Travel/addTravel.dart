@@ -27,13 +27,23 @@ class _AddTravelState extends State<AddTravel> {
       try {
         final user = auth.currentUser;
         final userMail = user!.email;
-        FirebaseFirestore.instance.collection('travel').add({
-          'user': userMail,
-          'name': _name,
-          'description': _description,
-          'date': _date,
-          'destination': _destination,
-          'lienImage': _lienImage
+        FirebaseFirestore.instance
+            .collection("user")
+            .where("userMail", isEqualTo: userMail)
+            .get()
+            .then((querySnapshot) {
+          for (var result in querySnapshot.docs) {
+            var pseudo = result.get('pseudo');
+            FirebaseFirestore.instance.collection('travel').add({
+              'user': userMail,
+              'pseudo': pseudo,
+              'name': _name,
+              'description': _description,
+              'date': _date,
+              'destination': _destination,
+              'lienImage': _lienImage
+            });
+          }
         });
 
         FirebaseFirestore.instance

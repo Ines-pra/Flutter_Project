@@ -151,7 +151,7 @@ class _LoginState extends State<Login> {
                                               onChanged: (value) {
                                                 _password = value;
                                               },
-                                              obscureText: false,
+                                              obscureText: true,
                                               decoration: const InputDecoration(
                                                 hintText: 'Mot de passe ',
                                                 enabledBorder:

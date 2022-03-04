@@ -3,11 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wavel/pages/help.dart';
-import 'package:wavel/pages/Travel/listWishTravel.dart';
 import 'package:wavel/pages/User/informationsUser.dart';
 import 'package:wavel/pages/User/listUser.dart';
 import 'Travel/addTravel.dart';
-import 'Travel/listTravel.dart';
 import 'login.dart';
 
 class Accueil extends StatefulWidget {
@@ -34,53 +32,6 @@ class _AccueilState extends State<Accueil> {
         print("Erreur: $e");
       } catch (e) {
         print("Erreur: $e");
-      }
-    }
-
-    Future<void> _deleteWish(id, title, destination, lienImage) async {
-      try {
-        // FirebaseFirestore.instance.collection('wish').add({
-        //   'id': id,
-        //   'user': userMail,
-        //   'titre': title,
-        //   'destination': destination,
-        //   'lienImage': lienImage
-        // });
-        FirebaseFirestore.instance
-            .collection("wish")
-            .get()
-            .then((querySnapshot) {
-          querySnapshot.docs.forEach((result) {
-            // print(result.data());
-            FirebaseFirestore.instance
-                .collection("wish")
-                .where("id", isEqualTo: id)
-                .where("user", isEqualTo: userMail)
-                // .doc(result.id)
-                // .collection("id")
-                .get()
-                .then((querySnapshot) {
-              // for (var result in querySnapshot.docs) {
-              // FirebaseFirestore.instance
-              //     .collection('wish')
-              //     .doc(result.id)
-              //     .delete();
-              if (result == "")
-                print('vide');
-              else {
-                FirebaseFirestore.instance
-                    .collection('wish')
-                    .doc(result.id)
-                    .delete();
-              }
-
-              // print('delete');
-              // }
-            });
-          });
-        });
-      } catch (e) {
-        return null;
       }
     }
 
@@ -188,7 +139,7 @@ class _AccueilState extends State<Accueil> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                    'By ' + document['user'],
+                                    'By ' + document['pseudo'],
                                     style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold),
