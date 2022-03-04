@@ -21,8 +21,6 @@ class _ListeWishTravelState extends State<ListeWishTravel> {
       try {
         FirebaseFirestore.instance.collection('wish').doc(documentId).delete();
         print('Voyage supprimé $documentId');
-        // Navigator.of(context).push(
-        //     MaterialPageRoute(builder: (context,document.id) => const UpdateTravel()));
       } catch (e) {
         return null;
       }

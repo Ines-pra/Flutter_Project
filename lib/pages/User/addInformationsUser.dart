@@ -84,7 +84,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  //titre
                                   Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
@@ -102,8 +101,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),
-
-                                          //label pseudo
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -146,8 +143,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-
-                                          //label nom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -190,7 +185,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //label prenom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -233,7 +227,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //age
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -276,7 +269,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //destination préféré
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -320,7 +312,6 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //bouton connexion
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 40, 0, 0),

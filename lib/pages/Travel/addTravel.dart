@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +26,6 @@ class _AddTravelState extends State<AddTravel> {
       try {
         final user = auth.currentUser;
         final userMail = user!.email;
-
-        if (_name == '') {
-          _name = ' ';
-        } else if (_description == '') {
-          _description = ' ';
-        } else if (_destination == '') {
-          _destination = ' ';
-        } else if (_date == '') {
-          _date = ' ';
-        } else if (_lienImage == '') {
-          _lienImage = ' ';
-        }
-
         FirebaseFirestore.instance
             .collection("user")
             .where("userMail", isEqualTo: userMail)
@@ -147,17 +133,6 @@ class _AddTravelState extends State<AddTravel> {
                           ),
                           textAlign: TextAlign.start,
                         )),
-
-                    // Padding(
-                    //     padding: const EdgeInsets.all(25.0),
-                    //     child: InputDatePickerFormField(
-                    //       onDateSubmitted: (value) {
-                    //         _date = value;
-                    //       },
-                    //       firstDate: DateTime(1900),
-                    //       lastDate: DateTime(2100),
-                    //       fieldLabelText: 'Entrez une date',
-                    //     )),
                     Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: TextFormField(

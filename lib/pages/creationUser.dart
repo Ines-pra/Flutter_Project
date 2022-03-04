@@ -24,9 +24,8 @@ class _CreationUserState extends State<CreationUser> {
             .createUserWithEmailAndPassword(email: _email, password: _password);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => const AddInformationsUser()));
-        print("Création d'un utilisateur ok");
-      } else
-        print('erreur mdp ! ');
+        // print("Création d'un utilisateur ok");
+      }
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -79,7 +78,6 @@ class _CreationUserState extends State<CreationUser> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  //titre
                                   Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
@@ -97,7 +95,6 @@ class _CreationUserState extends State<CreationUser> {
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),
-                                          //label email
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -140,7 +137,6 @@ class _CreationUserState extends State<CreationUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //label mot de passe
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 20, 30, 0),
@@ -183,7 +179,6 @@ class _CreationUserState extends State<CreationUser> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //bouton connexion
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 40, 0, 0),

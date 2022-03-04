@@ -20,7 +20,7 @@ class _LoginState extends State<Login> {
     try {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const CreationUser()));
-      print('Redirection vers la page de connexion !');
+      // print('Redirection vers la page de connexion !');
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -32,13 +32,9 @@ class _LoginState extends State<Login> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: _email, password: _password);
-
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const Accueil()));
-
-      print("Connexion d'un utilisateur ok");
-
-      // print("User: $userCredential");
+      // print("Connexion d'un utilisateur ok");
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {
@@ -50,9 +46,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0x7E3474E0),
-        // appBar: AppBar(
-        //   title: const Text("Login"),
-        // ),
         body: SafeArea(
             child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
@@ -82,7 +75,6 @@ class _LoginState extends State<Login> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  //titre
                                   Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: Column(
@@ -100,7 +92,6 @@ class _LoginState extends State<Login> {
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ),
-                                          //label email
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 0, 30, 0),
@@ -143,7 +134,6 @@ class _LoginState extends State<Login> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //label mot de passe
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(30, 20, 30, 0),
@@ -186,7 +176,6 @@ class _LoginState extends State<Login> {
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
-                                          //bouton connexion
                                           Padding(
                                             padding: const EdgeInsetsDirectional
                                                 .fromSTEB(0, 40, 0, 0),

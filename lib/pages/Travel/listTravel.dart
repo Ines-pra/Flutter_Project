@@ -11,11 +11,11 @@ class ListeTravel extends StatefulWidget {
 }
 
 class _ListeTravelState extends State<ListeTravel> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   Future<String?> updateTravel(documentId) async {
     try {
       print('Voyage modifié $documentId');
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => UpdateTravel(documentId)));
     } catch (e) {
       return null;
     }
@@ -23,10 +23,23 @@ class _ListeTravelState extends State<ListeTravel> {
 
   Future<String?> deleteTravel(documentId) async {
     try {
+      final user = auth.currentUser;
+      final userMail = user!.email;
       FirebaseFirestore.instance.collection('travel').doc(documentId).delete();
+
+      FirebaseFirestore.instance
+          .collection("user")
+          .where("userMail", isEqualTo: userMail)
+          .get()
+          .then((querySnapshot) {
+        for (var result in querySnapshot.docs) {
+          var nbTravel = result.get('nbTravel');
+          FirebaseFirestore.instance.collection('user').doc(result.id).update({
+            'nbTravel': nbTravel - 1,
+          });
+        }
+      });
       print('Voyage supprimé $documentId');
-      // Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context,document.id) => const UpdateTravel()));
     } catch (e) {
       return null;
     }
@@ -60,8 +73,6 @@ class _ListeTravelState extends State<ListeTravel> {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Container(
-                    // height: 50.0,
-                    // width: 200.0,
                     decoration: BoxDecoration(
                       color: Colors.black87,
                       borderRadius: BorderRadius.circular(20.0),
@@ -128,24 +139,6 @@ class _ListeTravelState extends State<ListeTravel> {
                                   ),
                                 ),
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(12.0),
-                              //   child: MaterialButton(
-                              //     minWidth: 120,
-                              //     height: 40,
-                              //     color: const Color(0xFFC5E1A5),
-                              //     onPressed: () {
-                              //       updateTravel(document.id);
-                              //     },
-                              //     child: const Text(
-                              //       "Modifier ?",
-                              //       style: TextStyle(
-                              //         color: Colors.black87,
-                              //         fontWeight: FontWeight.w500,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ],

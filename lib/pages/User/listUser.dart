@@ -17,14 +17,6 @@ class _ListeUserState extends State<ListeUser> {
     final user = auth.currentUser;
     final userMail = user!.email;
 
-    // final countTravel = FirebaseFirestore.instance
-    //     .collection("travel")
-    //     .get()
-    //     .then((querySnapshot) {
-    //   querySnapshot.docs.forEach((result) {
-    //     print(result.data());
-    //   });
-    // });
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(

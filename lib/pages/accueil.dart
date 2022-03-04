@@ -2,7 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:wavel/pages/help.dart';
 import 'package:wavel/pages/User/informationsUser.dart';
 import 'package:wavel/pages/User/listUser.dart';
 import 'Travel/addTravel.dart';
@@ -25,7 +24,7 @@ class _AccueilState extends State<Accueil> {
     Future<void> _logout() async {
       try {
         await FirebaseAuth.instance.signOut();
-        print("Deconnexion");
+        // print("Deconnexion");
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Login()));
       } on FirebaseAuthException catch (e) {
@@ -43,7 +42,7 @@ class _AccueilState extends State<Accueil> {
           'destination': destination,
           'lienImage': lienImage
         });
-        print("New Wish");
+        // print("New Wish");
       } on FirebaseAuthException catch (e) {
         print("Erreur: $e");
       } catch (e) {
@@ -93,7 +92,6 @@ class _AccueilState extends State<Accueil> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            // ),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -111,7 +109,6 @@ class _AccueilState extends State<Accueil> {
                                 style: const TextStyle(fontSize: 14),
                               ),
                             ),
-
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: ClipRRect(
@@ -213,15 +210,6 @@ class _AccueilState extends State<Accueil> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeUser()));
-                },
-              ),
-              ListTile(
-                title: Row(
-                  children: const [Icon(Icons.help), Text('  Aide')],
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Help()));
                 },
               ),
               ListTile(
