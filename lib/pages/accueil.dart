@@ -103,7 +103,7 @@ class _AccueilState extends State<Accueil> {
     return Scaffold(
         backgroundColor: const Color(0xFFEEEEEE),
         appBar: AppBar(
-            backgroundColor: const Color(0x7E3474E0),
+            backgroundColor: Colors.teal.shade300,
             title: const Text("Accueil"),
             automaticallyImplyLeading: true),
         body: StreamBuilder(
@@ -209,7 +209,7 @@ class _AccueilState extends State<Accueil> {
             children: <Widget>[
               const DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Color(0x7E3474E0),
+                  color: Colors.teal,
                 ),
                 child: Text(
                   'Wavel',
@@ -220,56 +220,66 @@ class _AccueilState extends State<Accueil> {
                 ),
               ),
               ListTile(
-                title: const Text('Accueil'),
+                title: Row(
+                  children: const [Icon(Icons.home), Text('  Accueil')],
+                ),
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Accueil()));
                 },
               ),
               ListTile(
-                title: const Text('Mes informations'),
+                title: Row(
+                  children: const [
+                    Icon(Icons.people),
+                    Text('  Mes informations')
+                  ],
+                ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const InformationsUser()));
                 },
               ),
               ListTile(
-                title: const Text('Partager un nouveau voyage'),
+                title: Row(
+                  children: const [
+                    Icon(Icons.add_circle),
+                    Text('  Nouveau voyage')
+                  ],
+                ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const AddTravel()));
                 },
               ),
               ListTile(
-                title: const Text('Mes Voyages'),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ListeTravel()));
-                },
-              ),
-              ListTile(
-                title: const Text('Liste de mes envies'),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ListeWishTravel()));
-                },
-              ),
-              ListTile(
-                title: const Text('Liste des voyageurs'),
+                title: Row(
+                  children: const [
+                    Icon(Icons.directions_walk),
+                    Text('  Voyageuses - Voyageurs'),
+                  ],
+                ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ListeUser()));
                 },
               ),
               ListTile(
-                title: const Text('Aide'),
+                title: Row(
+                  children: const [Icon(Icons.help), Text('  Aide')],
+                ),
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => const Help()));
                 },
               ),
               ListTile(
-                title: const Text('Déconexion'),
+                title: Row(
+                  children: const [
+                    Icon(Icons.highlight_off),
+                    Text('  Déconnexion'),
+                  ],
+                ),
                 onTap: _logout,
               ),
             ],

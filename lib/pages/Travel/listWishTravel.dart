@@ -31,7 +31,7 @@ class _ListeWishTravelState extends State<ListeWishTravel> {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
-          backgroundColor: const Color(0x7E3474E0),
+          backgroundColor: Colors.teal.shade300,
           title: const Text("Mes envies"),
           automaticallyImplyLeading: true),
       body: StreamBuilder(

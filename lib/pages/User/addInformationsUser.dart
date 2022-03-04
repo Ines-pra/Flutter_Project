@@ -146,7 +146,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                           //label prenom
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(30, 0, 50, 0),
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _firstname = value;
@@ -189,7 +189,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                           //age
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(30, 0, 70, 0),
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _age = value;
@@ -232,7 +232,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                           //destination préféré
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(30, 0, 90, 0),
+                                                .fromSTEB(30, 0, 30, 0),
                                             child: TextFormField(
                                               onChanged: (value) {
                                                 _favoriteDestination = value;
@@ -279,7 +279,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
                                                 .fromSTEB(0, 40, 0, 0),
                                             child: MaterialButton(
                                               minWidth: 170,
-                                              height: 40,
+                                              height: 50,
                                               color: const Color(0xCC3474E0),
                                               onPressed: _addInformation,
                                               child: const Text(

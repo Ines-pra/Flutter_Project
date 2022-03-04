@@ -2,8 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'updateInformationsUser.dart';
+import 'package:wavel/pages/Travel/listTravel.dart';
+import 'package:wavel/pages/Travel/listWishTravel.dart';
 
 class InformationsUser extends StatefulWidget {
   const InformationsUser({Key? key}) : super(key: key);
@@ -18,22 +18,11 @@ class _InformationsUserState extends State<InformationsUser> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final user = auth.currentUser;
     final userMail = user!.email;
-    var compteur = 0;
-    final countTravel = FirebaseFirestore.instance
-        .collection("travel")
-        .where("user", isEqualTo: userMail)
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        compteur++;
-      });
-      print(compteur);
-    });
 
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
-        backgroundColor: const Color(0x7E3474E0),
+        backgroundColor: Colors.teal.shade300,
         title: const Text("Mes informations"),
       ),
       body: StreamBuilder(
@@ -50,7 +39,7 @@ class _InformationsUserState extends State<InformationsUser> {
           return ListView(
             children: snapshot.data!.docs.map((document) {
               return Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -116,7 +105,8 @@ class _InformationsUserState extends State<InformationsUser> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Text(
-                                        'Nombre de voyage partagé : $compteur',
+                                        'Nombre de voyage partagé : ' +
+                                            document['nbTravel'].toString(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(fontSize: 14),
                                       ),
@@ -125,27 +115,47 @@ class _InformationsUserState extends State<InformationsUser> {
                                 ],
                               ),
                             )),
-                        // Padding(
-                        //   padding:
-                        //       const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                        //   child: MaterialButton(
-                        //     minWidth: 170,
-                        //     height: 40,
-                        //     color: const Color(0x7E3474E0),
-                        //     onPressed: () {
-                        //       Navigator.of(context).push(MaterialPageRoute(
-                        //           builder: (context) =>
-                        //               const UpdateInformationsUser()));
-                        //     },
-                        //     child: const Text(
-                        //       "Modifier mes informations",
-                        //       style: TextStyle(
-                        //         color: Color(0xFFEEEEEE),
-                        //         fontWeight: FontWeight.w500,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                          child: MaterialButton(
+                            minWidth: 170,
+                            height: 50,
+                            color: Colors.teal.shade100,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ListeTravel()));
+                            },
+                            child: const Text(
+                              "Mes voyages",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                          child: MaterialButton(
+                            minWidth: 170,
+                            height: 50,
+                            color: Colors.teal.shade100,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ListeWishTravel()));
+                            },
+                            child: const Text(
+                              "Mes envies",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
                       ]));
             }).toList(),
           );

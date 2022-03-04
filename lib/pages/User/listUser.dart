@@ -13,9 +13,9 @@ class ListeUser extends StatefulWidget {
 class _ListeUserState extends State<ListeUser> {
   @override
   Widget build(BuildContext context) {
-    // final FirebaseAuth auth = FirebaseAuth.instance;
-    // final user = auth.currentUser;
-    // final userMail = user!.email;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+    final userMail = user!.email;
 
     // final countTravel = FirebaseFirestore.instance
     //     .collection("travel")
@@ -28,11 +28,14 @@ class _ListeUserState extends State<ListeUser> {
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
-        backgroundColor: const Color(0x7E3474E0),
+        backgroundColor: Colors.teal.shade300,
         title: const Text("Voyageuses - Voyageurs"),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('user').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('user')
+            .where(("userMail"), isNotEqualTo: userMail)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -62,7 +65,7 @@ class _ListeUserState extends State<ListeUser> {
                                 child: Text(
                                   document['name'] + '  ',
                                   style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -70,19 +73,32 @@ class _ListeUserState extends State<ListeUser> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   document['firstname'],
-                                  style: const TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ),
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 12, 12, 0),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Destination favorite : ' +
                                     document['favoriteDestination'],
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                12, 0, 12, 12),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Voyages partagés : ' +
+                                    document['nbTravel'].toString(),
+                                style: const TextStyle(fontSize: 14),
                               ),
                             ),
                           ),

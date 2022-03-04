@@ -17,11 +17,16 @@ late String _password;
 class _CreationUserState extends State<CreationUser> {
   Future<void> _createUser() async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: _email, password: _password);
-      print("Création d'un utilisateur ok");
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const AddInformationsUser()));
+      RegExp regex = RegExp(
+          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+      if (regex.hasMatch(_password)) {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: _email, password: _password);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AddInformationsUser()));
+        print("Création d'un utilisateur ok");
+      } else
+        print('erreur mdp ! ');
     } on FirebaseAuthException catch (e) {
       print("Erreur: $e");
     } catch (e) {

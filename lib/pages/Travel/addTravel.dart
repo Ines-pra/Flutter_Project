@@ -36,6 +36,21 @@ class _AddTravelState extends State<AddTravel> {
           'lienImage': _lienImage
         });
 
+        FirebaseFirestore.instance
+            .collection("user")
+            .where("userMail", isEqualTo: userMail)
+            .get()
+            .then((querySnapshot) {
+          for (var result in querySnapshot.docs) {
+            var nbTravel = result.get('nbTravel');
+            FirebaseFirestore.instance
+                .collection('user')
+                .doc(result.id)
+                .update({
+              'nbTravel': nbTravel + 1,
+            });
+          }
+        });
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Accueil()));
 
@@ -48,18 +63,21 @@ class _AddTravelState extends State<AddTravel> {
     return Scaffold(
         backgroundColor: const Color(0xFFEEEEEE),
         appBar: AppBar(
-          backgroundColor: const Color(0x7E3474E0),
+          // Ancienne couleur : 0x7E3474E0
+          backgroundColor: Colors.teal.shade300,
           title: const Text("Nouveau voyage "),
         ),
         body: Center(
             child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(25.0),
                         child: TextFormField(
                           onChanged: (value) {
                             _name = value;
@@ -71,7 +89,7 @@ class _AddTravelState extends State<AddTravel> {
                           textAlign: TextAlign.start,
                         )),
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(25.0),
                         child: TextFormField(
                           onChanged: (value) {
                             _destination = value;
@@ -83,7 +101,7 @@ class _AddTravelState extends State<AddTravel> {
                           textAlign: TextAlign.start,
                         )),
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(25.0),
                         child: TextFormField(
                           onChanged: (value) {
                             _date = value;
@@ -95,7 +113,7 @@ class _AddTravelState extends State<AddTravel> {
                           textAlign: TextAlign.start,
                         )),
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(25.0),
                         child: TextFormField(
                           onChanged: (value) {
                             _description = value;
@@ -108,7 +126,7 @@ class _AddTravelState extends State<AddTravel> {
                         )),
 
                     // Padding(
-                    //     padding: const EdgeInsets.all(16.0),
+                    //     padding: const EdgeInsets.all(25.0),
                     //     child: InputDatePickerFormField(
                     //       onDateSubmitted: (value) {
                     //         _date = value;
@@ -118,7 +136,7 @@ class _AddTravelState extends State<AddTravel> {
                     //       fieldLabelText: 'Entrez une date',
                     //     )),
                     Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(25.0),
                         child: TextFormField(
                           onChanged: (value) {
                             _lienImage = value;
@@ -133,14 +151,14 @@ class _AddTravelState extends State<AddTravel> {
                         padding: const EdgeInsets.all(16.0),
                         child: MaterialButton(
                           minWidth: 170,
-                          height: 40,
-                          color: const Color(0x7E3474E0),
+                          height: 50,
+                          color: Colors.teal.shade100,
                           onPressed: _envoiDonnees,
                           child: const Text(
                             "Valider",
                             style: TextStyle(
-                              color: Color(0xFFEEEEEE),
-                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         )),

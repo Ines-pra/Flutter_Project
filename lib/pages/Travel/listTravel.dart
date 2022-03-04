@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wavel/pages/Travel/updateTravel.dart';
 
 class ListeTravel extends StatefulWidget {
   const ListeTravel({Key? key}) : super(key: key);
