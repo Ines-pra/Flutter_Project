@@ -41,7 +41,7 @@ class _AddInformationsUserState extends State<AddInformationsUser> {
         'favoriteDestination': _favoriteDestination,
         'id': _id
       });
-      print("Ajout des informations d'un utilisateur ok");
+      // print("Ajout des informations d'un utilisateur ok");
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const Accueil()));
     } on FirebaseAuthException catch (e) {

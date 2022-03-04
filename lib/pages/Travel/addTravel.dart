@@ -63,7 +63,7 @@ class _AddTravelState extends State<AddTravel> {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const Accueil()));
 
-        print("Envoi données");
+        // print("Envoi données");
       } catch (e) {
         print("Erreur: $e");
       }

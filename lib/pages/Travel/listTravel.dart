@@ -39,7 +39,7 @@ class _ListeTravelState extends State<ListeTravel> {
           });
         }
       });
-      print('Voyage supprimé $documentId');
+      // print('Voyage supprimé $documentId');
     } catch (e) {
       return null;
     }

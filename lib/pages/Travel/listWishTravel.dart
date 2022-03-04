@@ -20,7 +20,7 @@ class _ListeWishTravelState extends State<ListeWishTravel> {
     Future<String?> deleteWishTravel(documentId) async {
       try {
         FirebaseFirestore.instance.collection('wish').doc(documentId).delete();
-        print('Voyage supprimé $documentId');
+        // print('Voyage supprimé $documentId');
       } catch (e) {
         return null;
       }
